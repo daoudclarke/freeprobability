@@ -3,14 +3,6 @@ from freeprob import compute_free_prob, compute_independent_prob, get_free_seque
 from collections import defaultdict
 
 
-# def test_compute_free_prob():
-#     probs = {
-#         'm_john': 0.5,
-#         'm_sneezed': 0.5,
-#         'm_someone': 0.4,
-#         'm_coughed': 0.6,
-#         'm_john m_
-
 def test_compute_free_prob():
     probs = {('m_a',): 0.5, ('s_a',): 0.5}
     prob = compute_free_prob(probs.__getitem__, ('m_a', 's_a'))
@@ -41,18 +33,9 @@ def test_sneeze():
         }
 
     def distribution(concepts):
-        #if concepts[0].startswith('m'):
         intersection = reduce(set.__and__, [masses[c] for c in concepts])
         return sum(probs[c] for c in intersection) or 0.0
         
-        # sequence = ' '.join(concepts)
-        # p = 0.0
-        # if sequence in 's_n s_v s_n s_v':
-        #     p += 0.5
-        # if sequence in 's_n s_v':
-        #     p += 0.5
-        # return p
-
     prob = compute_free_prob(distribution, sequence)
     print "Free: ", prob
     
