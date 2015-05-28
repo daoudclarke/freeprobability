@@ -57,3 +57,9 @@ def get_free_sequences(sequence):
     assuming have different first characters).
     """
     return [tuple(group) for _, group in groupby(sequence, lambda s: s[0])]
+
+
+def compute_independent_prob(prob_func, sequence):
+    sequence.sort(key=lambda s: s[0])
+    probs = [prob_func(group) for _, group in groupby(sequence, lambda s: s[0])]
+    return reduce(float.__mul__, probs)
