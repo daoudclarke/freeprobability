@@ -16,7 +16,7 @@ def test_free_sequences():
 
 
 def test_sneeze():
-    sequence = 'n_john v_sneezed n_someone v_coughed'.split()
+    sequence = 's_john v_likes o_mary s_mary v_likes o_barry'.split()
     #sequence = 'n_john v_sneezed'.split()
     probs = {
         1: 0.1,
@@ -26,10 +26,12 @@ def test_sneeze():
         }
 
     masses = {
-        'n_john': {3},
-        'n_someone': {1, 3},
-        'v_sneezed': {2},
-        'v_coughed': {2, 4},
+        's_john': {1,2},
+        's_mary': {2,3},
+        'o_mary': {1,3},
+        'o_barry': {2,3},
+        'v_likes': {4},
+        'c_and': {4},
         }
 
     def distribution(concepts):
