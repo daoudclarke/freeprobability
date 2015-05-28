@@ -43,6 +43,7 @@ def compute_free_prob(prob_func, input_sequence):
             if type(e) == float:
                 unpacked.append(e)
             else:
+                assert type(e) == tuple, "Found %r of type %r" % (e, type(e))
                 unpacked += list(e)
         total -= compute_free_prob(prob_func, unpacked)
 

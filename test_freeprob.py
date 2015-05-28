@@ -24,37 +24,34 @@ def test_free_sequences():
 
 
 def test_sneeze():
-    #sequence = 'm_john s_n m_sneezed s_v m_someone s_n m_coughed s_v'.split()
-    sequence = 'm_john s_n m_sneezed s_v'.split()
-    #probs = defaultdict(float, {
+    sequence = 'm_john s_n m_sneezed s_v m_someone s_n m_coughed s_v'.split()
+    #sequence = 'm_john s_n m_sneezed s_v'.split()
     probs = {
-        ('m_john',): 0.5,
-        ('m_sneezed',): 0.4,
-        ('m_sneezed', 'm_someone'): 0.4,
-        ('m_john', 'm_sneezed'): 0.3,
-        ('m_someone',): 0.7,
-        ('m_coughed',): 0.6,
-        ('m_john', 'm_someone'): 0.5,
-        ('m_sneezed', 'm_coughed'): 0.4,
-        ('m_someone', 'm_coughed'): 0.4,
-        ('m_john', 'm_coughed'): 0.5,
-        ('m_john', 'm_sneezed', 'm_someone'): 0.3,
-        ('m_sneezed', 'm_someone', 'm_coughed'): 0.2,
-        ('m_john', 'm_sneezed', 'm_coughed'): 0.3,
-        ('m_john', 'm_someone', 'm_coughed'): 0.2,
-        ('m_john', 'm_sneezed', 'm_someone', 'm_coughed'): 0.2,
-        ('s_n',): 0.9,
-        ('s_v',): 0.9,
-        ('s_n', 's_v'): 0.8,
-        ('s_v', 's_n'): 0.5,
-        ('s_n', 's_n'): 0.1,
-        ('s_v', 's_v'): 0.1,
-        ('s_n', 's_v', 's_n'): 0.4,
-        ('s_n', 's_n', 's_v'): 0.1,
-        ('s_v', 's_n', 's_v'): 0.4,
-        ('s_n', 's_v', 's_v'): 0.1,
-        ('s_n', 's_v', 's_n', 's_v'): 0.3,
+        1: 0.1,
+        2: 0.2,
+        3: 0.3,
+        4: 0.4,
         }
 
-    prob = compute_free_prob(probs.__getitem__, sequence)
+    masses = {
+        'm_john': {3},
+        'm_someone': {1, 3},
+        'm_sneezed': {3},
+        'm_coughed': {2, 3, 4},
+        }
+
+    def distribution(concepts):
+        if concepts[0].startswith('m'):
+            intersection = reduce(set.__and__, [masses[c] for c in concepts])
+            return sum(probs[c] for c in intersection) or 0.0
+        
+        sequence = ' '.join(concepts)
+        p = 0.0
+        if sequence in 's_n s_v s_n s_v':
+            p += 0.5
+        if sequence in 's_n s_v':
+            p += 0.5
+        return p
+
+    prob = compute_free_prob(distribution, sequence)
     print prob
