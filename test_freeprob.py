@@ -13,7 +13,7 @@ from collections import defaultdict
 
 def test_compute_free_prob():
     probs = {('m_a',): 0.5, ('s_a',): 0.5}
-    prob = compute_free_prob(probs, ('m_a', 's_a'))
+    prob = compute_free_prob(probs.__getitem__, ('m_a', 's_a'))
     assert prob == 0.25
 
 
@@ -56,5 +56,5 @@ def test_sneeze():
         ('s_n', 's_v', 's_n', 's_v'): 0.3,
         }
 
-    prob = compute_free_prob(probs, sequence)
+    prob = compute_free_prob(probs.__getitem__, sequence)
     print prob
